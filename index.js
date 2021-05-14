@@ -27,18 +27,19 @@ console.log(gallery);
 
 // ОТКЛЮЧАЮ ССЫЛКУ
 
-const galleryLink = document.querySelectorAll('.gallery__link');
-galleryLink.forEach((element) =>
-  element.addEventListener('click', function (event) {
-    event.preventDefault();
-  })
-);
+// const galleryLink = document.querySelectorAll('.gallery__link');
+// galleryLink.forEach((element) =>
+//   element.addEventListener('click', function (event) {
+//     event.preventDefault();
+//   })
+// );
 
 // OPEN MODAL WINDOW
 
 gallery.addEventListener('click', openModal);
 
 function openModal(event) {
+  event.preventDefault();
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
