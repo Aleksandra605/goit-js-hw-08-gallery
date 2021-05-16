@@ -25,15 +25,6 @@ const createGalery = makeGallery(images);
 gallery.append(...createGalery);
 console.log(gallery);
 
-// ОТКЛЮЧАЮ ССЫЛКУ
-
-// const galleryLink = document.querySelectorAll('.gallery__link');
-// galleryLink.forEach((element) =>
-//   element.addEventListener('click', function (event) {
-//     event.preventDefault();
-//   })
-// );
-
 // OPEN MODAL WINDOW
 
 gallery.addEventListener('click', openModal);
@@ -43,14 +34,15 @@ function openModal(event) {
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
+
+  window.addEventListener('keydown', turnOnKeys);
+
   selectedItemIndex = +event.target.dataset.id;
   lightbox.classList.add('is-open');
-
   lightBoxImage.src = event.target.dataset.source;
 }
-//KEYS LEFT AND RIGHT
 
-window.onkeydown = function (event) {
+const turnOnKeys = (event) => {
   if (event.keyCode === 27) {
     modalClose(event);
     return;
@@ -70,8 +62,7 @@ window.onkeydown = function (event) {
   if (event.keyCode === 37) {
     if (selectedItemIndex === 0) {
       selectedItemIndex = images.length;
-    }
-    {
+    } else {
       selectedItemIndex--;
     }
     lightBoxImage.src = images[selectedItemIndex].original;
@@ -89,15 +80,7 @@ closeByClickOverlay.addEventListener('click', modalClose);
 function modalClose(event) {
   lightBoxImage.src = '';
   lightbox.classList.remove('is-open');
+  console.log(event);
+  // window.onkeydown = null;
+  window.removeEventListener('keydown', turnOnKeys);
 }
-
-
-
-
-
-
-
-
-
-
-
