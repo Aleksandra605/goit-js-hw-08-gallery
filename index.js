@@ -13,8 +13,6 @@ const makeGallery = (options) => {
       'beforeend',
       `<a class="gallery__link" href="${image.original}"><img class="gallery__image" data-id="${index}" src="${image.preview}" data-source="${image.original}" alt="${image.description}"/></a>`
     );
-    // makeItem.id = index;
-
     console.log(makeItem);
 
     return makeItem;
@@ -34,11 +32,11 @@ function openModal(event) {
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
-
+  lightbox.classList.add('is-open');
   window.addEventListener('keydown', turnOnKeys);
 
   selectedItemIndex = +event.target.dataset.id;
-  lightbox.classList.add('is-open');
+
   lightBoxImage.src = event.target.dataset.source;
 }
 
@@ -47,7 +45,6 @@ const turnOnKeys = (event) => {
     modalClose(event);
     return;
   }
-
   // arrow right
   if (event.keyCode === 39) {
     if (selectedItemIndex === images.length - 1) {
@@ -57,7 +54,6 @@ const turnOnKeys = (event) => {
     }
     lightBoxImage.src = images[selectedItemIndex].original;
   }
-
   // arrow left
   if (event.keyCode === 37) {
     if (selectedItemIndex === 0) {
@@ -80,7 +76,5 @@ closeByClickOverlay.addEventListener('click', modalClose);
 function modalClose(event) {
   lightBoxImage.src = '';
   lightbox.classList.remove('is-open');
-  console.log(event);
-  // window.onkeydown = null;
   window.removeEventListener('keydown', turnOnKeys);
 }
