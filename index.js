@@ -13,8 +13,6 @@ const makeGallery = (options) => {
       'beforeend',
       `<a class="gallery__link" href="${image.original}"><img class="gallery__image" data-id="${index}" src="${image.preview}" data-source="${image.original}" alt="${image.description}"/></a>`
     );
-    // makeItem.id = index;
-
     console.log(makeItem);
 
     return makeItem;
@@ -25,15 +23,6 @@ const createGalery = makeGallery(images);
 gallery.append(...createGalery);
 console.log(gallery);
 
-// ОТКЛЮЧАЮ ССЫЛКУ
-
-// const galleryLink = document.querySelectorAll('.gallery__link');
-// galleryLink.forEach((element) =>
-//   element.addEventListener('click', function (event) {
-//     event.preventDefault();
-//   })
-// );
-
 // OPEN MODAL WINDOW
 
 gallery.addEventListener('click', openModal);
@@ -43,19 +32,19 @@ function openModal(event) {
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
-  selectedItemIndex = +event.target.dataset.id;
   lightbox.classList.add('is-open');
+  window.addEventListener('keydown', turnOnKeys);
+
+  selectedItemIndex = +event.target.dataset.id;
 
   lightBoxImage.src = event.target.dataset.source;
 }
-//KEYS LEFT AND RIGHT
 
-window.onkeydown = function (event) {
+const turnOnKeys = (event) => {
   if (event.keyCode === 27) {
     modalClose(event);
     return;
   }
-
   // arrow right
   if (event.keyCode === 39) {
     if (selectedItemIndex === images.length - 1) {
@@ -65,13 +54,11 @@ window.onkeydown = function (event) {
     }
     lightBoxImage.src = images[selectedItemIndex].original;
   }
-
   // arrow left
   if (event.keyCode === 37) {
     if (selectedItemIndex === 0) {
       selectedItemIndex = images.length;
-    }
-    {
+    } else {
       selectedItemIndex--;
     }
     lightBoxImage.src = images[selectedItemIndex].original;
@@ -89,15 +76,5 @@ closeByClickOverlay.addEventListener('click', modalClose);
 function modalClose(event) {
   lightBoxImage.src = '';
   lightbox.classList.remove('is-open');
+  window.removeEventListener('keydown', turnOnKeys);
 }
-
-
-
-
-
-
-
-
-
-
-
