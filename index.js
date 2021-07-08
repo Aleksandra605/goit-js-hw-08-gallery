@@ -36,6 +36,7 @@ function openModal(event) {
   window.addEventListener('keydown', turnOnKeys);
 
   selectedItemIndex = +event.target.dataset.id;
+  console.log(event.target.dataset);
 
   lightBoxImage.src = event.target.dataset.source;
 }
